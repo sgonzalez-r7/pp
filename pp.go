@@ -16,11 +16,31 @@ const (
         jsonFormatterIndentDefault = "    " // 4 spaces
 )
 
+type jsonFormatterOption func(*JsonFormatter)
+
+func Indent(s string) jsonFormatterOption {
+	return func(f *JsonFormatter) {
+		f.Indent = s
+	}
+}
+
+func Prefix(s string) jsonFormatterOption {
+	return func(f *JsonFormatter) {
+		f.Prefix = s
+	}
+}
+
 func NewJsonFormatter(opts... jsonFormatterOption) *JsonFormatter {
-        return JsonFormatter{
-                Prefix: jsonFormatterPrefixDefault,
-                Indent: jsonFormatterIndentDefault,
-        }
+	f := &JsonFormatter{
+		Prefix: jsonFormatterPrefixDefault,
+		Indent: jsonFormatterIndentDefault,
+	}
+
+	for _, opt := range opts {
+		opt(f)
+	}
+
+	return f
 }
 
 func (f *JsonFormatter) Fprintjson(w io.Writer, v interface{}) {
