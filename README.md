@@ -10,13 +10,13 @@ Convenience functions for pretty-printing in Go
 `pp.SpewDump("k1", v1, "k2", v2)`
 
 ### Use [SpewDump](https://github.com/davecgh/go-spew) to write `k-v` pairs to a file
-`
+```
 if out, err := os.Create("/path/to/file"); err == nil {
     pp.FspewDump("k1", v1, "k2", v2)
   } else {
     fmt.Fprintf(os.Stderr, "ERROR: %s\n", err.Error())
   }
-`
+```
 
 ### print json to `STDERR`
 `pp.Printjson(v)`
